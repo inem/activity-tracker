@@ -1,0 +1,10 @@
+<h1>ActivityTracker</h1>
+
+<% @users.each do |u| %>
+  <p>
+    <%= u.name %>
+    <% u.tasks.each do |t| %>
+      <%= "*" if t.completed? %>
+    <% end %>
+  </p>
+<% end %>
