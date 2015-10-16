@@ -1,5 +1,8 @@
 class DashboardController < ApplicationController
   def index
-    @users = User.activities
+    @users = User.all
+  end
+
+  def update_activities
   end
 end
