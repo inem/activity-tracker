@@ -1,10 +1,21 @@
-<h1>ActivityTracker</h1>
+<div class = "container">
 
-<% @users.each do |u| %>
-  <p>
-    <%= u.name %>
-    <% u.tasks.each do |t| %>
-      <%= "*" %>
-    <% end %>
-  </p>
-<% end %>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">ActivityTracker</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <% @users.each do |u| %>
+    <p>
+      <%= u.name %>
+      <% u.tasks.each do |t| %>
+        <%= "*" %>
+      <% end %>
+    </p>
+  <% end %>
+
+</div>
