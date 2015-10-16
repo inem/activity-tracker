@@ -17,8 +17,8 @@ class User < ActiveRecord::Base
   private
 
   def init_exercises
-    tasks.each do |t|
-      exercises.create(name: t.name)
+    self.tasks.each do |t|
+      self.exercises.create(name: t.name)
     end
   end
 end
