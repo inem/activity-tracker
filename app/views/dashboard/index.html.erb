@@ -4,8 +4,8 @@
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="#">ActivityTracker</a>
-        <%= link_to "Add user", new_user_path %>
       </div>
+      <%= link_to "Add user", new_user_path, class: "btn btn-default"%>
     </div>
   </nav>
 
@@ -14,7 +14,11 @@
     <p>
       <%= u.name %>
       <% u.exercises.each do |e| %>
+       <a href =
+        "https://github.com/<%= u.name %>/<%=u.repo %>/releases/<%= e.name %>"
+        class = "exercise-success">
         <%= e.name %>
+      </a>
       <% end %>
     </p>
   <% end %>
