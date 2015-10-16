@@ -11,7 +11,6 @@ class User < ActiveRecord::Base
        #(github.repos.commits.get name, name, tag.commit.sha).commit.committer.date
     end
     github.repos.tags
-    binding.pry
   end
 
   private
