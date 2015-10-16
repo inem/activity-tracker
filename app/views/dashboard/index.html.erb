@@ -4,6 +4,7 @@
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="#">ActivityTracker</a>
+        <%= link_to "Add user", new_user_path %>
       </div>
     </div>
   </nav>
@@ -13,7 +14,7 @@
     <p>
       <%= u.name %>
       <% u.tasks.each do |t| %>
-        <%= "*" %>
+        <%= t.name %>
       <% end %>
     </p>
   <% end %>
