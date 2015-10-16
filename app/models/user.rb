@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
 
+  after_save :init_exercises
+
   validates :name, :repo, presence: true
+  has_many :exercises
 
 
   def tasks
@@ -10,4 +13,13 @@ class User < ActiveRecord::Base
     end
     github.repos.tags
   end
+
+  private
+
+  def init_exercises
+    self.tasks.each do |t|
+      self.exercises.create(name: t.name)
+    end
+  end
+
 end

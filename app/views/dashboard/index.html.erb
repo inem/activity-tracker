@@ -13,8 +13,8 @@
   <% @users.each do |u| %>
     <p>
       <%= u.name %>
-      <% u.tasks.each do |t| %>
-        <%= t.name %>
+      <% u.exercises.each do |e| %>
+        <%= e.name %>
       <% end %>
     </p>
   <% end %>
