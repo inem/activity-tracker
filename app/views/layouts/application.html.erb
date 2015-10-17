@@ -7,8 +7,18 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div class = "container">
 
-<%= yield %>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">ActivityTracker</a>
+        </div>
+        <%= link_to "Add user", new_user_path, class: "btn btn-default"%>
+      </div>
+    </nav>
+    <%= yield %>
+  </div>
 
 </body>
 </html>
