@@ -24,6 +24,19 @@ class User < ActiveRecord::Base
     "#{Rails.root}/tmp/#{self.name}_#{self.repo}"
   end
 
+  def repo_events
+    Repository.new(clone_repo).events
+  end
+
+  def method_statistics
+    repo_events.map do |event|
+       { method: event.method_name,
+         complexity:  event.method_complexity,
+         functional_score: event.method_functional_score,
+         length: event.method_length }
+    end
+  end
+
   private
 
   def init_exercises
