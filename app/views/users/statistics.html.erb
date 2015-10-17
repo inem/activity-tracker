@@ -1,0 +1,18 @@
+<h1>Repository</h1>
+<table>
+  <th>
+    <td>Complexity</td>
+    <td>Functional score</td>
+    <td>Length</td>
+    <td>Day</td>
+  </th>
+  <% @statistics.each do |stat| %>
+    <tr>
+      <td><%= stat[:method] %></td>
+      <td><%= stat[:complexity] %></td>
+      <td><%= stat[:functional_score] %></td>
+      <td><%= stat[:length] %></td>
+      <td><%= stat[:day] %></td>
+    </tr>
+  <% end %>
+</table>
