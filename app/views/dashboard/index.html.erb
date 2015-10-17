@@ -9,18 +9,19 @@
     </div>
   </nav>
 
-
-  <% @users.each do |u| %>
-    <p>
-      <%= u.name %>
-      <% u.exercises.each do |e| %>
-       <a href =
-        "https://github.com/<%= u.name %>/<%=u.repo %>/releases/<%= e.name %>"
-        class = "exercise-success">
-        <%= e.name %>
-      </a>
-      <% end %>
-    </p>
-  <% end %>
-
+  <table>
+    <% @users.each do |u| %>
+      <tr>
+        <td><%= u.name %></td>
+        <% u.exercises.reverse_each  do |e| %>
+          <td class="exercise-success">
+            <a href=
+            <%= "https://github.com/#{u.name}/#{u.repo}/releases/#{e.name}" %>>
+             <%= e.name %>
+           </a>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
 </div>
