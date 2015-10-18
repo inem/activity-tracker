@@ -29,15 +29,7 @@ class User < ActiveRecord::Base
   end
 
   def method_statistics
-    hash = repo_events.reverse.uniq(&:method_name).map do |event|
-      next if event.method_length < 2
-      { method: event.method_name,
-        complexity:  event.method_complexity,
-        functional_score: event.method_functional_score,
-        length: event.method_length,
-        day: event.day}
-    end
-    hash.reject!(&:nil?)
+    repo_events.reverse.uniq(&:method_name)
   end
 
   private

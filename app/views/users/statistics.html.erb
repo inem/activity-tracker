@@ -4,15 +4,13 @@
     <td>Complexity</td>
     <td>Functional score</td>
     <td>Length</td>
-    <td>Day</td>
   </th>
   <% @statistics.each do |stat| %>
     <tr>
-      <td><%= stat[:method] %></td>
-      <td><%= stat[:complexity] %></td>
-      <td><%= stat[:functional_score] %></td>
-      <td><%= stat[:length] %></td>
-      <td><%= stat[:day] %></td>
+      <td><%= stat.method_name %></td>
+      <td><%= stat.method_complexity %></td>
+      <td><%= stat.method_functional_score %></td>
+      <td><%= stat.method_length %></td>
     </tr>
   <% end %>
 </table>
