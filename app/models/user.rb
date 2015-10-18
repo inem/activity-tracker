@@ -35,8 +35,14 @@ class User < ActiveRecord::Base
   private
 
   def init_exercises
-    self.tasks.each do |t|
-      self.exercises.create(name: t.name)
+    repo = Git.open(self.clone_repo)
+    repo.tags.map do |tag|
+      self.exercises.create(name: tag.name,
+                            start_date: repo.gcommit(tag.objectish).date)
     end
+  end
+
+  def get_date
+    Git.open(self.clone_repo).tags
   end
 end
