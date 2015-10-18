@@ -1,10 +1,10 @@
 <table class="table table-condensed table-striped">
   <th>
-    <td>Task #1</td>
-    <td>Task #2</td>
-    <td>Task #3</td>
-    <td>Task #4</td>
-    <td>Refactoring</td>
+    <td class="text-center">Task #1</td>
+    <td class="text-center">Task #2</td>
+    <td class="text-center">Task #3</td>
+    <td class="text-center">Task #4</td>
+    <td class="text-center">Refactoring</td>
   </th>
   <% @users.each do |u| %>
     <tr>
@@ -12,7 +12,7 @@
         <%= link_to u.name, statistics_user_path(u) %>
       </td>
       <% u.exercises.reverse_each  do |e| %>
-        <td class="success">
+        <td class="success text-center">
           <a href=
           <%= "https://github.com/#{u.name}/#{u.repo}/releases/#{e.name}" %>>
            <%= e.name %>
