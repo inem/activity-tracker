@@ -13,8 +13,11 @@ class UsersController < ApplicationController
   end
 
   def statistics
+    require "analytics"
+
     @user = User.find_by(id: params[:id])
     @statistics = @user.method_statistics
+    @method_churns = method_churns @user.repo_events
   end
 
   private
