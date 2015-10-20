@@ -12,11 +12,15 @@ module Activity
     end
 
     def commits_frequency(days)
-      hash = {}
-      repo.log.since('2 days ago').map do |l|
-        hash[commit_date(l).to_s] = committer_name(l)
+      temp_hash = {}
+      repo.log.since("#{days} days ago").map do |l|
+        temp_hash[l.sha] = committer_name(l)
       end
-      hash
+      users_hash = Hash.new {|hsh, key| hsh[key] = [] }
+      temp_hash.each do |k,v|
+        users_hash[v] << k
+      end
+      users_hash
     end
 
     private
