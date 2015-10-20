@@ -1,8 +1,12 @@
-<table class = "table table-bordered">
-  <caption>Коммиты участников</caption>
-  <tr>
-  <% @activity.commiters.each do |c| %>
-   <td><%= c %></td>
-  <% end %>
-  </tr>
-</table>
+<% @activity.commits_frequency(5).each do |k,v| %>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">Коммиты <span class = "label label-default"> <%= k %> </span> за 5 дней</div>
+    <div class="panel-body">
+      <% v.each do |sha| %>
+        <%= sha %> <br>
+      <% end %>
+    </div>
+  </div>
+
+<% end %>
