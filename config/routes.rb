@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :projects, only: [:index, :show, :create]
+  resources :projects, only: [:index, :show, :create, :new]
 
   root "dashboard#index"
 

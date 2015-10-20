@@ -1,0 +1,8 @@
+<table class = "table table-bordered">
+  <caption>Коммиты участников</caption>
+  <tr>
+  <% @activity.commiters.each do |c| %>
+   <td><%= c %></td>
+  <% end %>
+  </tr>
+</table>

@@ -1,0 +1,5 @@
+<table class="table">
+  <% @projects.each do |p| %>
+    <tr> <%= link_to p.repo, p %> </tr> <br>
+  <% end %>
+</table>
