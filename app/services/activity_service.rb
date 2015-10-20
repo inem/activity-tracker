@@ -25,6 +25,10 @@ module Activity
 
     private
 
+    def commit_message(sha)
+      repo.gcommit(sha).message
+    end
+
     def commit_date(sha)
       repo.gcommit(sha).committer.date
     end
