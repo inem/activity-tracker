@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  before_action :init_project, only: [:show, :update_info]
   #Потом поправлю
   require_relative "#{Rails.root}/app/services/activity_service"
   #...
@@ -20,11 +21,19 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.find(params[:id])
-    @activity = Activity::Project.new(@project.clone_repo)
+  end
+
+  def update_info
+    @activity.config[:days] = params[:days]
+    render partial: "activity_info"
   end
 
   private
+
+  def init_project
+    @project = Project.find(params[:id])
+    @activity = Activity::Project.new(@project.clone_repo)
+  end
 
   def project_params
     params.require(:project).permit(:repo)

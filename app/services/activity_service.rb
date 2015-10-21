@@ -1,8 +1,12 @@
 module Activity
   class Project
     attr_reader :repo
+    attr_accessor :config
     def initialize(repo)
       @repo = Git.open(repo)
+      @config = {
+        days: 5
+      }
     end
 
     def commiters
@@ -11,9 +15,9 @@ module Activity
       end.uniq!
     end
 
-    def commits_frequency(days)
+    def commits_frequency
       temp_hash = {}
-      repo.log.since("#{days} days ago").map do |l|
+      repo.log.since("#{config[:days]} days ago").map do |l|
         temp_hash[l.sha] = committer_name(l)
       end
       users_hash = Hash.new {|hsh, key| hsh[key] = [] }

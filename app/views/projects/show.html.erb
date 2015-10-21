@@ -1,14 +1,8 @@
 <h3><%= link_to @project.repo, "https://github.com/#{@project.repo}"%></h3>
 
-<% @activity.commits_frequency(5).each do |k,v| %>
+<h5>Активность за <span class = "label label-info label-pr label-days"> <%= @activity.config[:days] %> </span> дней </h5>
+<div id = "days-slider" data-id = "<%= @project.id %>" > </div>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">Коммиты <span class = "label label-default"> <%= k %> </span> за 5 дней</div>
-    <div class="panel-body">
-      <% v.each do |sha| %>
-        <%= link_to sha,"https://github.com/#{@project.repo}/commit/#{sha}" %> <br>
-      <% end %>
-    </div>
-  </div>
-
-<% end %>
+<div id = "activity-info">
+  <%= render "activity_info" %>
+</div>
