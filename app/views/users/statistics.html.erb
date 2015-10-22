@@ -4,13 +4,14 @@
   </a>
 </h1>
 <div class="row">
-  <div class="col-sm-8">
+  <div class="col-sm-12">
     <h3>Methods</h3>
     <table class="table table-striped">
       <th>
         <td class="text-center"><b>Complexity</b></td>
         <td class="text-center"><b>Functional score</b></td>
         <td class="text-center"><b>Length</b></td>
+        <td class="text-center"><b>Method Body</b></td>
       </th>
       <% @statistics.each do |stat| %>
         <tr>
@@ -22,6 +23,7 @@
           <%- else %>
             <td class="text-center success"><%= stat.method_length %></td>
           <% end %>
+          <td><pre><%= stat.method_body %></pre></td>
         </tr>
       <% end %>
     </table>
