@@ -15,7 +15,7 @@ module Activity
       end.uniq!
     end
 
-    def commits_frequency
+    def commits_per_days
       temp_hash = {}
       repo.log.since("#{config[:days]} days ago").map do |l|
         temp_hash[l.sha] = committer_name(l)
@@ -27,7 +27,19 @@ module Activity
       users_hash
     end
 
+    def commits_between_two_tags(tag1,tag2)
+      commit1 = commit_hash(tag1)
+      commit2 = commit_hash(tag2)
+      repo.log.between(commit_1, commit_2).map do |l|
+        binding.pry
+      end
+    end
+
     private
+
+    def commit_hash(tag)
+      repo.show(tag).split("\n")[6].split(" ").last
+    end
 
     def commit_message(sha)
       repo.gcommit(sha).message

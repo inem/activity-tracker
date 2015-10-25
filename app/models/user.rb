@@ -36,13 +36,28 @@ class User < ActiveRecord::Base
 
   def init_exercises
     repo = Git.open(self.clone_repo)
-    repo.tags.map do |tag|
+    repo.tags.each_with_index.map do |tag,i|
       self.exercises.create(name: tag.name,
-                            start_date: repo.gcommit(tag.objectish).date)
+                            start_date: get_dates(repo,i)[:start_date],
+                            end_date: get_dates(repo,i)[:end_date])
     end
   end
 
-  def get_date
-    Git.open(self.clone_repo).tags
+#Перенести методы в отедльный модуль, и включить его в User.rb
+  def get_dates(repo,i)
+    hash = {}
+    if i == 0
+      #count = 50 -- макс. размер получаемых коммитов за раз
+      hash[:start_date] = repo.log(count = 50).last.date
+      hash[:end_date] = repo.gcommit(repo.tags.first.objectish).date
+    else
+      hash[:start_date] = repo.gcommit(repo.tags[i-1].objectish).date
+      hash[:end_date] = repo.gcommit(repo.tags[i].objectish).date
+    end
+    hash
   end
+
+  # def get_date
+  #   Git.open(self.clone_repo).tags
+  # end
 end

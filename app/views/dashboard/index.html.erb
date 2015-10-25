@@ -17,11 +17,7 @@
           <a href=
           <%= "https://github.com/#{u.name}/#{u.repo}/releases/#{e.name}" %>>
            <%= e.name %>
-           <% if i == 0 %>
-              0
-           <% else %>
-              <%= ((u.exercises[i].start_date - u.exercises[i-1].start_date)/3600).round(2) %> ч.
-           <% end %>
+           <%= ((e.end_date - e.start_date)/3600).round(2) %> ч.
          </a>
         </td>
       <% end %>
