@@ -37,9 +37,6 @@ module Activity
 
     private
 
-    def commit_hash(tag)
-      repo.show(tag).split("\n")[6].split(" ").last
-    end
 
     def commit_message(sha)
       repo.gcommit(sha).message

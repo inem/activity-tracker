@@ -13,7 +13,7 @@
         <%= link_to u.name, statistics_user_path(u) %>
       </td>
       <% u.exercises.each.with_index  do |e, i| %>
-        <td class="success text-center">
+        <td class="success text-center" child-tags="<%= u.exercises[i].name %>"
           <a href=
           <%= "https://github.com/#{u.name}/#{u.repo}/releases/#{e.name}" %>>
            <%= e.name %>
