@@ -12,7 +12,8 @@ var ready = function(){
       url: "users/" + id + "/commits_frequency",
       data: { "sha1": sha1, "sha2": sha2 },
       success: function(data){
-        console.log(data.commits);
+        $(".modal-content").html(data);
+        $(".modal").modal();
       }
     });
   });

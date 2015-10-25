@@ -26,10 +26,10 @@ class UsersController < ApplicationController
   def commits_frequency
     user = User.find(params[:id])
     repo = user.clone_repo
-    commits = Activity::Project.new(repo).commits_between_two_tags(
+    @commits = Activity::Project.new(repo).commits_between_two_tags(
                                           params[:sha1], params[:sha2])
 
-    render json: {commits: commits}
+    render partial: "commits"
   end
 
   private
