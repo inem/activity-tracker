@@ -1,0 +1,5 @@
+pg_version: 9.4
+pg_repositoty: "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main"
+pg_repositoty_key: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+
+pg_default_auth_method: trust
