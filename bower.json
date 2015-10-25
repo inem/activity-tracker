@@ -15,6 +15,7 @@
   ],
   "dependencies": {
     "bootstrap": null,
-    "jquery-ui": null
+    "jquery-ui": null,
+    "Chart.js": null
   }
 }

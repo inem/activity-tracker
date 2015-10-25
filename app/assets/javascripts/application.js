@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require bootstrap/dist/js/bootstrap
 //= require jquery-ui/jquery-ui.min
+//= require Chart.js/Chart.min
 //= require turbolinks
 //= require_tree .
