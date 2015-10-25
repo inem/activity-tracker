@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  #Потом поправлю
+  require_relative "#{Rails.root}/app/services/activity_service"
+  #...
   def new
     @user = User.new
   end
@@ -18,6 +21,15 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     @statistics = @user.method_statistics
     @method_churns = method_churns @user.repo_events
+  end
+
+  def commits_frequency
+    user = User.find(params[:id])
+    repo = user.clone_repo
+    commits = Activity::Project.new(repo).commits_between_two_tags(
+                                          params[:sha1], params[:sha2])
+
+    render json: {commits: commits}
   end
 
   private

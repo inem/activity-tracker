@@ -28,9 +28,11 @@ module Activity
     end
 
     def commits_between_two_tags(hash1,hash2)
+      commits = []
       repo.log.between(hash1, hash2).map do |l|
-        binding.pry
+        commits << l.sha
       end
+      commits
     end
 
     private

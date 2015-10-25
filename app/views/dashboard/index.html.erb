@@ -13,7 +13,7 @@
         <%= link_to u.name, statistics_user_path(u) %>
       </td>
       <% u.exercises.each.with_index  do |e, i| %>
-        <td class="success text-center elapsed-time" child-tags="<%= e.children_hashes(i) %>"
+        <td class="success text-center elapsed-time" data-id = "<%= u.id %>" child-tags="<%= e.children_hashes(i) %>"
           <a href=
           <%= "https://github.com/#{u.name}/#{u.repo}/releases/#{e.name}" %>>
            <%= e.name %>

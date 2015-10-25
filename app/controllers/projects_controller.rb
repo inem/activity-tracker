@@ -28,6 +28,7 @@ class ProjectsController < ApplicationController
     render partial: "activity_info"
   end
 
+
   private
 
   def init_project
