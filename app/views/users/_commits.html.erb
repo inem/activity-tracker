@@ -1,5 +1,5 @@
 <div class = "commits-block">
   <% @commits.each do |c| %>
-    <%= c %> <br>
+    <%= link_to c, "https://github.com/" + @user.name + "/" + @user.repo + "/commit/" + c  %> <br>
   <% end %>
 </div>

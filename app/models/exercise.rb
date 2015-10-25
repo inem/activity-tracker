@@ -15,7 +15,7 @@ class Exercise < ActiveRecord::Base
   end
 
   def commit_hash(repo,tag)
-    repo.show(tag).split("\n")[6].split(" ").last
+    repo.tag(tag).sha
   end
 
 end
