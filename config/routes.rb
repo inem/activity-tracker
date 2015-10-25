@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     member do
       put :update_info
     end
+    collection do
+      put :commits_frequency
+    end
   end
 
   root "dashboard#index"

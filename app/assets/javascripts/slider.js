@@ -21,6 +21,3 @@ var update_info = function() {
     }
   });
 }
-
-$(document).ready(update_info);
-$(document).on("page:load", update_info);

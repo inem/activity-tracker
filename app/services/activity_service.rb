@@ -27,10 +27,8 @@ module Activity
       users_hash
     end
 
-    def commits_between_two_tags(tag1,tag2)
-      commit1 = commit_hash(tag1)
-      commit2 = commit_hash(tag2)
-      repo.log.between(commit_1, commit_2).map do |l|
+    def commits_between_two_tags(hash1,hash2)
+      repo.log.between(hash1, hash2).map do |l|
         binding.pry
       end
     end

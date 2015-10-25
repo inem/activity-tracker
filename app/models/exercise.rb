@@ -11,7 +11,7 @@ class Exercise < ActiveRecord::Base
       hash[:sha1] = commit_hash(repo,Exercise.all[i-1].name)
       hash[:sha2] = commit_hash(repo,Exercise.all[i].name)
     end
-    hash
+    hash.values.join(",")
   end
 
   def commit_hash(repo,tag)
