@@ -8,7 +8,7 @@ var ready = function(){
     sha2 = $(this).attr("child-tags").split(",")[1];
     console.log("SHA:",sha1, sha2);
     $.ajax({
-      type: "PUT",
+      type: "GET",
       url: "users/" + id + "/commits_frequency",
       data: { "sha1": sha1, "sha2": sha2 },
       success: function(data){
@@ -17,7 +17,7 @@ var ready = function(){
       }
     });
   });
-  
+
 }
 
 $(document).ready(ready);

@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create] do
     member do
       get :statistics
-      put :commits_frequency
-      put :chart_statistics
+      get :commits_frequency
+      get :chart_statistics
     end
   end
 
