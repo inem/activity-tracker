@@ -47,7 +47,6 @@ var build_chart = function(){
           //
         }
       });
-      if (typeof myBar !== 'undefined') {myBar.destroy()}
   });
 }
 
