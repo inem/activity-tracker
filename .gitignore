@@ -18,10 +18,12 @@ pickle-email-*.html
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
 config/initializers/secret_token.rb
 config/secrets.yml
+config/database.yml
 
 ## Environment normalisation:
 /.bundle
 /vendor/bundle
+/vendor/assets/components
 
 # these should all be checked in to normalise the environment:
 # Gemfile.lock, .ruby-version, .ruby-gemset
@@ -31,8 +33,8 @@ config/secrets.yml
 
 # if using bower-rails ignore default bower_components path bower.json files
 /vendor/assets/bower_components
-*.bowerrc
-bower.json
+
+
 
 # Ignore pow environment settings
 .powenv
