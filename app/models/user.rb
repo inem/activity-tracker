@@ -9,13 +9,14 @@ class User < ActiveRecord::Base
 
 
   def chart_statistics
-    hash = {}
-    activity = Activity::Project.new(self.clone_repo)
-    self.exercises.each_with_index do |e,i|
-      hash[e.name] = activity.commits_between_two_tags(e.children_hashes(i).split(',').first,
-                              e.children_hashes(i).split(',').second)
-    end
-    hash
+    # hash = {}
+    # activity = Activity::Project.new(self.clone_repo)
+    # self.exercises.each_with_index do |e,i|
+    #   hash[e.name] = activity.commits_between_two_tags(e.children_hashes(i).split(',').first,
+    #                           e.children_hashes(i).split(',').second)
+    # end
+    # hash
+    
   end
 
   def tasks

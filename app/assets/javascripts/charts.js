@@ -21,26 +21,33 @@ var build_chart = function(){
   });
 
   chart_button.click(function(){
+
+      var dates_array = [];
+      var commits_count = [];
+
       var u_id = $(this).attr("data-id");
       $.ajax({
         type: "GET",
         url: "users/" + u_id + "/chart_statistics",
         success: function(data){
-          console.log(data);
+          for (i in data) {
+            dates_array.push(i);
+            commits_count.push(data[i].length -1 )
+          }
           barChartData = {
-        		labels : ["part1","part2","part3","part4"],
+        		labels : dates_array,
         		datasets : [
         			{
         				fillColor : "rgba(220,220,220,0.5)",
         				strokeColor : "rgba(220,220,220,0.8)",
         				highlightFill: "rgba(220,220,220,0.75)",
         				highlightStroke: "rgba(220,220,220,1)",
-        				data : [data["part1"].length,data["part2"].length,data["part3"].length,data["part4"].length]
+        				data : commits_count
         			}
         		]
         	}
           //Clear and draw new Chart
-          myBar.clear();
+          myBar.destroy();
           myBar = new Chart(ctx).Bar(barChartData, {
             responsive : true
           });

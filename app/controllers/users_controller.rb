@@ -28,13 +28,14 @@ class UsersController < ApplicationController
     repo = @user.clone_repo
     @commits = Activity::Project.new(repo).commits_between_two_tags(
                                           params[:sha1], params[:sha2])
-
+    binding.pry
     render partial: "commits"
   end
 
   def chart_statistics
     @user = User.find(params[:id])
-    @statistics = @user.chart_statistics
+    repo = @user.clone_repo
+    @statistics = Activity::Project.new(repo).commits_hash_per_days
     render json: @statistics.to_json
   end
 
