@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     member do
       get :statistics
       put :commits_frequency
+      put :chart_statistics
     end
   end
 

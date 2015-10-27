@@ -32,6 +32,13 @@ class UsersController < ApplicationController
     render partial: "commits"
   end
 
+  def chart_statistics
+    @user = User.find(params[:id])
+    @statistics = @user.chart_statistics
+    render json: @statistics.to_json
+  end
+
+
   private
 
   def user_params

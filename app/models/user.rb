@@ -1,9 +1,22 @@
 class User < ActiveRecord::Base
-
+  #Потом поправлю
+  require_relative "#{Rails.root}/app/services/activity_service"
+  #...
   after_save :init_exercises
 
   validates :name, :repo, presence: true
   has_many :exercises
+
+
+  def chart_statistics
+    hash = {}
+    activity = Activity::Project.new(self.clone_repo)
+    self.exercises.each_with_index do |e,i|
+      hash[e.name] = activity.commits_between_two_tags(e.children_hashes(i).split(',').first,
+                              e.children_hashes(i).split(',').second)
+    end
+    hash
+  end
 
   def tasks
     github = Github.new user: name, repo: repo
