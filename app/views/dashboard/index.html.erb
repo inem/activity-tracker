@@ -1,0 +1,40 @@
+<h2> <%= link_to "Projects", projects_path %> </h2>
+<table class="table table-condensed table-striped">
+  <th>
+    <td class="text-center">Task #1</td>
+    <td class="text-center">Task #2</td>
+    <td class="text-center">Task #3</td>
+    <td class="text-center">Task #4</td>
+    <td class="text-center">Refactoring</td>
+  </th>
+  <% @users.each do |u| %>
+    <tr>
+      <td>
+        <%= link_to u.name, statistics_user_path(u) %>
+        <span class="glyphicon glyphicon-signal user-chart" aria-hidden="true" data-id = <%= u.id %>></span>
+      </td>
+      <% u.exercises.each.with_index  do |e, i| %>
+        <td class="success text-center elapsed-time" data-id = "<%= u.id %>" child-tags="<%= e.children_hashes(i) %>"
+          <a href=
+          <%= "https://github.com/#{u.name}/#{u.repo}/releases/#{e.name}" %>>
+           <%= e.name %>
+           <%= ((e.end_date - e.start_date)/3600).round(2) %> ч.
+         </a>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<!-- Modal -->
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      ...
+    </div>
+  </div>
+</div>
+
+<div style="width: 50%">
+  <canvas id="canvas" height="450" width="600"></canvas>
+</div>

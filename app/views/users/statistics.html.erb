@@ -1,0 +1,42 @@
+<h1>Repository:
+  <a href=<%= "https://github.com/#{@user.name}/#{@user.repo}" %>>
+    <%= @user.repo %>
+  </a>
+</h1>
+<div class="row">
+  <div class="col-sm-12">
+    <h3>Methods</h3>
+    <table class="table table-striped">
+      <th>
+        <td class="text-center"><b>Complexity</b></td>
+        <td class="text-center"><b>Functional score</b></td>
+        <td class="text-center"><b>Length</b></td>
+        <td class="text-center"><b>Method Body</b></td>
+      </th>
+      <% @statistics.each do |stat| %>
+        <tr>
+          <td><%= stat.method_name %></td>
+          <td class="text-center"><%= stat.method_complexity %></td>
+          <td class="text-center"><%= stat.method_functional_score %></td>
+          <%- if stat.method_length >= 15 %>
+            <td class="text-center danger"><%= stat.method_length %></td>
+          <%- else %>
+            <td class="text-center success"><%= stat.method_length %></td>
+          <% end %>
+          <td><pre><%= stat.method_body %></pre></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  <div class="col-sm-4">
+    <h3>Most changeable methods</h3>
+    <table class="table table-striped">
+      <% @method_churns.each do |method| %>
+        <tr>
+          <td><%= method.first %></td>
+          <td><%= method.last %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

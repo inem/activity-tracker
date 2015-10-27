@@ -1,0 +1,10 @@
+<% @activity.commits_per_days.each do |k,v| %>
+  <div class="panel panel-default">
+    <div class="panel-heading">Коммиты <span class = "label label-default label-pr"> <%= k %> </span> за <%= @activity.config[:days] %> дней</div>
+    <div class="panel-body">
+      <% v.each do |sha| %>
+        <%= link_to sha,"https://github.com/#{@project.repo}/commit/#{sha}" %> <br>
+      <% end %>
+    </div>
+  </div>
+<% end %>
