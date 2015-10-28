@@ -1,0 +1,13 @@
+- name: apt cache update
+  apt: update_cache=yes cache_valid_time=3600
+  become: yes
+
+- name: install system tools
+  apt: name={{ item }} state=latest
+  become: yes
+  with_items:
+    - git
+    - htop
+    - httpie
+    - wget
+    - tmux

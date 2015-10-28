@@ -1,0 +1,5 @@
+- name: bundle install
+  command: bundle install chdir="{{ app_dir }}"
+
+- name: bower install
+  bower: path="{{ app_dir }}"
