@@ -1,0 +1,2 @@
+- name: database.yml
+  command: cp config/database.yml.sample config/database.yml chdir={{ app_dir }}

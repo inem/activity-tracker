@@ -1,0 +1,9 @@
+- name: set default auth method
+  replace:
+    dest: /etc/postgresql/{{ pg_version }}/main/pg_hba.conf
+    regexp: (local\s+all\s+(?:postgres|all)\s+)(\w+)
+    replace: '\1{{ pg_default_auth_method }}'
+    backup: yes
+  become: yes
+  notify:
+    - restart postgresql
