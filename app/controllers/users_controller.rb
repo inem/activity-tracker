@@ -1,7 +1,7 @@
+require "analytics"
+require_relative "#{Rails.root}/app/services/activity_service"
+
 class UsersController < ApplicationController
-  #Потом поправлю
-  require_relative "#{Rails.root}/app/services/activity_service"
-  #...
   def new
     @user = User.new
   end
@@ -16,7 +16,6 @@ class UsersController < ApplicationController
   end
 
   def statistics
-    require "analytics"
 
     @user = User.find_by(id: params[:id])
     @statistics = @user.method_statistics
@@ -37,7 +36,6 @@ class UsersController < ApplicationController
     @statistics = Activity::Project.new(repo).commits_hash_per_days
     render json: @statistics.to_json
   end
-
 
   private
 
