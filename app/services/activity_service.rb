@@ -35,18 +35,13 @@ module Activity
       commits
     end
 
-    #demo for timeline
-
     def commits_hash_per_days
       require 'date'
       last_commit_date = Date.parse(repo.log.last.date.strftime("%Y-%m-%d"))
       first_commit_date = Date.parse(repo.log.first.date.strftime("%Y-%m-%d"))
-      #Хэш дат, от первого коммита, до последнего (пока что макс = 30 шт.)
       all_dates = (last_commit_date..first_commit_date).to_a.map{ |d| d.strftime("%Y-%m-%d")}
       all_commits = repo.log
-      #Хэш, который будет содержать коммиты, сгруппированные по датам
       users_hash = Hash.new { |hsh, key| hsh[key] = [] }
-      #Инициализировать ключи с датами
       all_dates.each do |date|
         users_hash[date] << 0
       end
@@ -57,10 +52,7 @@ module Activity
       users_hash
     end
 
-    ##
-
     private
-
 
     def commit_message(sha)
       repo.gcommit(sha).message

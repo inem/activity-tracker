@@ -1,8 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :init_project, only: [:show, :update_info]
-  #Потом поправлю
   require_relative "#{Rails.root}/app/services/activity_service"
-  #...
+
   def index
     @projects = Project.all
   end
@@ -16,7 +15,7 @@ class ProjectsController < ApplicationController
     if @project.save
       redirect_to @project
     else
-      redirect_to :index #test
+      redirect_to :index
     end
   end
 
@@ -27,7 +26,6 @@ class ProjectsController < ApplicationController
     @activity.config[:days] = params[:days]
     render partial: "activity_info"
   end
-
 
   private
 
