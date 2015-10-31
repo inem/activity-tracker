@@ -12,14 +12,14 @@ class User < ActiveRecord::Base
   end
 
   def github_url
-    "https://github.com/#{self.name}/#{self.repo}.git"
+    "https://github.com/#{name}/#{repo}.git"
   end
 
   def clone_repo
-    repo = Git.clone(github_url, "#{self.name}_#{self.repo}", :path => "#{Rails.root}/tmp")
+    repo = Git.clone(github_url, "#{name}_#{repo}", path: "#{Rails.root}/tmp")
     repo.dir.path
   rescue Git::GitExecuteError
-    "#{Rails.root}/tmp/#{self.name}_#{self.repo}"
+    "#{Rails.root}/tmp/#{name}_#{repo}"
   end
 
   def repo_events
@@ -33,15 +33,15 @@ class User < ActiveRecord::Base
   private
 
   def init_exercises
-    repo = Git.open(self.clone_repo)
-    repo.tags.each_with_index.map do |tag,i|
-      self.exercises.create(name: tag.name,
-                            start_date: get_dates(repo,i)[:start_date],
-                            end_date: get_dates(repo,i)[:end_date])
+    repo = Git.open(clone_repo)
+    repo.tags.each_with_index.map do |tag, i|
+      exercises.create(name: tag.name,
+                       start_date: get_dates(repo, i)[:start_date],
+                       end_date: get_dates(repo, i)[:end_date])
     end
   end
 
-  def get_dates(repo,i)
+  def get_dates(repo, i)
     hash = {}
     if i == 0
       hash[:start_date] = repo.log(count = 50).last.date
