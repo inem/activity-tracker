@@ -16,7 +16,6 @@ class UsersController < ApplicationController
   end
 
   def statistics
-
     @user = User.find_by(id: params[:id])
     @statistics = @user.method_statistics
     @method_churns = method_churns @user.repo_events
@@ -26,7 +25,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     repo = @user.clone_repo
     @commits = Activity::Project.new(repo).commits_between_two_tags(
-                                          params[:sha1], params[:sha2])
+      params[:sha1], params[:sha2])
     render partial: "commits"
   end
 
