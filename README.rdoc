@@ -1,1 +1,3 @@
 ActivityTracker
+
+Configure database.yml & run 'bower install' after clone
