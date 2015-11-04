@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'widgets/activity_chart'
+
   root "dashboard#index"
 
 end
