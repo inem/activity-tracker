@@ -1,6 +1,5 @@
 class ProjectsController < ApplicationController
   before_action :init_project, only: [:show, :update_info]
-  require_relative "#{Rails.root}/app/services/activity_service"
 
   def index
     @projects = Project.all
@@ -31,7 +30,7 @@ class ProjectsController < ApplicationController
 
   def init_project
     @project = Project.find(params[:id])
-    @activity = Activity::Project.new(@project.clone_repo)
+    @activity = ActivityService.new(@project.clone_repo)
   end
 
   def project_params

@@ -1,5 +1,4 @@
 require "analytics"
-require_relative "#{Rails.root}/app/services/activity_service"
 
 class UsersController < ApplicationController
   def new
@@ -24,7 +23,7 @@ class UsersController < ApplicationController
   def commits_frequency
     @user = User.find(params[:id])
     repo = @user.clone_repo
-    @commits = Activity::Project.new(repo).commits_between_two_tags(
+    @commits = ActivityService.new(repo).commits_between_two_tags(
       params[:sha1], params[:sha2])
     render partial: "commits"
   end
@@ -32,7 +31,7 @@ class UsersController < ApplicationController
   def chart_statistics
     @user = User.find(params[:id])
     repo = @user.clone_repo
-    @statistics = Activity::Project.new(repo).commits_hash_per_days
+    @statistics = ActivityService.new(repo).commits_hash_per_days
     render json: @statistics.to_json
   end
 
