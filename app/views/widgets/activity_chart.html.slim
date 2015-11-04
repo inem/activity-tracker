@@ -1,1 +1,25 @@
 canvas#canvas height="427" width="570" style="width: 570px; height: 427px;"
+script == "window.DATA=#{@statistics}"
+
+coffee:
+  $(document).on 'ready page:load', ->
+    ctx = document.querySelector('#canvas').getContext('2d')
+
+    dates_array = []
+    commits_count = []
+
+    for date of window.DATA
+      dates_array.push date
+      commits_count.push(window.DATA[date].length - 1)
+
+    barChartData =
+      labels: dates_array
+      datasets: [{
+        fillColor: 'rgba(220,220,220,0.5)'
+        strokeColor: 'rgba(220,220,220,0.8)'
+        highlightFill: 'rgba(220,220,220,0.75)'
+        highlightStroke: 'rgba(220,220,220,1)'
+        data: commits_count
+      }]
+
+    new Chart(ctx).Bar(barChartData, responsive: true)
