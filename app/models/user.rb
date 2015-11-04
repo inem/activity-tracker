@@ -1,6 +1,4 @@
 class User < ActiveRecord::Base
-  require_relative "#{Rails.root}/app/services/activity_service"
-
   after_save :init_exercises
 
   validates :name, :repo, presence: true
