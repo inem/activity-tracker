@@ -8,24 +8,6 @@ class ActivityService
     }
   end
 
-  def commiters
-    repo.log.map do |l|
-      committer_name(l)
-    end.uniq!
-  end
-
-  def commits_per_days
-    temp_hash = {}
-    repo.log.since("#{config[:days]} days ago").map do |l|
-      temp_hash[l.sha] = committer_name(l)
-    end
-    users_hash = Hash.new { |hsh, key| hsh[key] = [] }
-    temp_hash.each do |k, v|
-      users_hash[v] << k
-    end
-    users_hash
-  end
-
   def commits_between_two_tags(hash1, hash2)
     commits = []
     repo.log.between(hash1, hash2).map do |l|
@@ -37,7 +19,7 @@ class ActivityService
   def commits_hash_per_days
     require "date"
     last_commit_date = Date.parse(repo.log.last.date.strftime("%Y-%m-%d"))
-    first_commit_date = Date.parse(repo.log.first.date.strftime("%Y-%m-%d"))
+    first_commit_date = Date.parse(Time.now.strftime("%Y-%m-%d"))
     all_dates = (last_commit_date..first_commit_date).to_a.map { |d| d.strftime("%Y-%m-%d") }
     all_commits = repo.log
     users_hash = Hash.new { |hsh, key| hsh[key] = [] }
@@ -49,19 +31,5 @@ class ActivityService
       users_hash[commit_date] << commit.sha
     end
     users_hash
-  end
-
-  private
-
-  def commit_message(sha)
-    repo.gcommit(sha).message
-  end
-
-  def commit_date(sha)
-    repo.gcommit(sha).committer.date
-  end
-
-  def committer_name(sha)
-    repo.gcommit(sha).committer.name
   end
 end
