@@ -7,12 +7,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :projects, only: [:index, :show, :create, :new] do
-    member do
-      put :update_info
-    end
-  end
-
   root "dashboard#index"
 
 end

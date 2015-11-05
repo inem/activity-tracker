@@ -1,8 +1,0 @@
-<h3><%= link_to @project.repo, "https://github.com/#{@project.repo}"%></h3>
-
-<h5>Активность за <span class = "label label-info label-pr label-days"> <%= @activity.config[:days] %> </span> дней </h5>
-<div id = "days-slider" data-id = "<%= @project.id %>" > </div>
-
-<div id = "activity-info">
-  <%= render "activity_info" %>
-</div>
