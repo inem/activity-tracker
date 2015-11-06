@@ -1,0 +1,21 @@
+# {{ ansible_managed }}
+
+description "{{ app_name }} puma app"
+
+start on runlevel [2]
+stop on runlevel [016]
+
+env PATH=$PATH:/usr/local/bin:/usr/bin:/bin
+env HOME=/home/{{ user_name }}
+
+respawn
+
+setuid {{ user_name }}
+setgid {{ group_name }}
+
+chdir {{ app_path }}/current
+
+script
+  /bin/bash -lc 'bundle exec puma'
+  sleep 5
+end script

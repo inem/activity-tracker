@@ -1,0 +1,30 @@
+---
+- hosts: application
+  sudo: yes
+  gather_facts: no
+  tasks:
+    - name: Include inventory specific variables
+      include_vars: "{{ item }}"
+      ignore_errors: yes
+      with_items:
+        - vars/{{ inventory_file }}.yml
+        - vars/{{ inventory_file }}_secrets.yml
+
+    - name: Get current release
+      shell: readlink {{ app_path }}/current | xargs basename
+      register: current
+
+    - debug: msg='Current release = {{ current.stdout }}'
+
+    - name: Get previous release
+      shell: ls -1r {{ app_path }}/releases | grep -A 1 '{{ current.stdout }}' | tail -1
+      register: previous
+
+    - debug: msg='Previous release = {{ previous.stdout }}'
+
+    - name: Symlink previous release
+      file: src={{ app_path }}/releases/{{ previous.stdout }} dest={{ app_path }}/current state=link force=yes
+      sudo_user: '{{ user_name }}'
+
+    - name: Restart puma
+      service: name={{ app_name }} state=restarted

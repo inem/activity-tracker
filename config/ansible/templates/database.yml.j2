@@ -1,0 +1,7 @@
+# {{ ansible_managed }}
+
+production:
+  pool: 5
+  adapter: postgresql
+  database: {{ app_name }}
+  username: {{ app_name }}
