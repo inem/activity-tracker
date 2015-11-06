@@ -1,0 +1,9 @@
+---
+app_name: activity-tracker
+user_name: '{{ app_name }}'
+group_name: '{{ app_name }}'
+app_path: /home/{{ user_name }}/apps/{{ app_name }}
+git_url: git@github.com:inem/activity-tracker.git
+branch: master
+app_port: 3000
+ruby_version: 2.2.3

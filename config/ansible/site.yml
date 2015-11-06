@@ -1,0 +1,136 @@
+---
+- hosts: application
+  sudo: yes
+  gather_facts: no
+  tasks:
+    - name: Include inventory specific variables
+      include_vars: "{{ item }}"
+      ignore_errors: yes
+      with_items:
+        - vars/{{ inventory_file }}.yml
+        - vars/{{ inventory_file }}_secrets.yml
+
+    - name: Update apt cache
+      apt: update_cache=yes
+
+    - name: Create application group
+      group: name={{ group_name }}
+
+    - name: Create application user
+      user: name={{ user_name }} group={{ group_name }} shell=/bin/bash home=/home/{{ user_name }}
+
+    - name: Create shared directories
+      file: path={{ app_path }}/shared/{{ item }} state=directory
+      sudo_user: '{{ user_name }}'
+      with_items:
+        - config
+        - tmp/sockets
+        - tmp/pids
+
+    #rvm & ruby & bundler
+    - name: Install apt dependencies
+      apt: name={{ item }}
+      with_items:
+        - autoconf
+        - bison
+        - build-essential
+        - libssl-dev
+        - libyaml-dev
+        - libreadline6-dev
+        - zlib1g-dev
+        - libncurses5-dev
+        - nodejs
+        - python-pip
+        - python-dev
+        - htop
+        - git
+        - libsqlite3-dev
+        - libtool
+        - ncurses-dev
+        - libxml2-dev
+        - openssl
+        - libgmp-dev
+        - npm
+        - nodejs-legacy
+
+    - name: Install bower
+      npm: name=bower global=yes
+
+    - name: Detect rvm binary
+      stat: path=/home/{{ user_name }}/.rvm/bin/rvm
+      register: rvm_binary
+
+    - name: Install RVM
+      shell: "curl -sSL https://get.rvm.io | bash"
+      when: not rvm_binary.stat.exists
+      sudo_user: '{{ user_name }}'
+
+    - name: Detect installed ruby
+      shell: bash -cl 'rvm {{ ruby_version }} do true'
+      register: ruby_installed
+      ignore_errors: yes
+      sudo_user: '{{ user_name }}'
+
+    - name: Install ruby
+      command: bash -cl 'rvm install {{ ruby_version }} --autolibs=0'
+      when: ruby_installed != true
+      sudo_user: '{{ user_name }}'
+
+    - name: Set default ruby
+      command: bash -cl 'rvm use {{ ruby_version }} --default'
+      sudo_user: '{{ user_name }}'
+
+    - name: Install bundler
+      command: bash -cl 'gem install bundler --no-ri --no-rdoc'
+      sudo_user: '{{ user_name }}'
+
+    #nginx & puma
+    - name: Install nginx
+      apt: name=nginx
+
+    - name: Disable default nginx site
+      file: path=/etc/nginx/sites-enabled/default state=absent
+
+    - name: Create nginx.conf
+      template: src=templates/nginx.conf.j2 dest=/etc/nginx/sites-enabled/{{ app_name }}
+
+    - name: Restart nginx
+      service: name=nginx state=restarted
+
+    - name: Install puma
+      command: bash -cl 'gem install puma --no-ri --no-rdoc'
+      sudo_user: '{{ user_name }}'
+
+    - name: Configure puma
+      template: src=templates/puma.rb.j2 dest={{ app_path }}/shared/config/puma.rb
+      sudo_user: '{{ user_name }}'
+      tags: puma
+
+    - name: Create upstart config
+      template: src=templates/upstart.conf.j2 dest=/etc/init/{{ app_name }}.conf
+
+    #postgresql
+    - name: Install postgresql
+      apt: name={{ item }}
+      with_items:
+        - libpq-dev
+        - postgresql
+        - postgresql-contrib
+
+    - name: Install required Python module
+      pip: name=psycopg2
+
+    - name: Create postgresql user
+      postgresql_user: name={{ app_name }} role_attr_flags=CREATEDB,SUPERUSER,CREATEROLE
+      sudo_user: postgres
+
+    - name: Create postgresql database
+      postgresql_db: name={{ app_name }} owner={{ app_name }}
+      sudo_user: postgres
+
+    - name: Restart postgresql
+      service: name=postgresql state=restarted
+
+    - name: Create config/database.yml
+      template: src=templates/database.yml.j2 dest={{ app_path }}/shared/config/database.yml mode=0600
+      sudo_user: '{{ user_name }}'

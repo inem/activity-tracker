@@ -1,0 +1,33 @@
+# {{ ansible_managed }}
+
+upstream {{ app_name }}-puma {
+  server unix://{{ app_path }}/current/tmp/sockets/puma.sock;
+}
+
+server {
+  listen {{ app_port }} default_server deferred;
+  # server_name example.com;
+
+  root {{ app_path }}/current/public;
+  access_log {{ app_path }}/current/log/nginx.access.log;
+  error_log {{ app_path }}/current/log/nginx.error.log info;
+
+  location ^~ /assets/ {
+    gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+  }
+
+  try_files $uri/index.html $uri @{{ app_name }}-puma;
+  location @{{ app_name }}-puma {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+
+    proxy_pass http://{{ app_name }}-puma;
+  }
+
+  error_page 500 502 503 504 /500.html;
+  client_max_body_size 10M;
+  keepalive_timeout 10;
+}
