@@ -16,6 +16,6 @@ setgid {{ group_name }}
 chdir {{ app_path }}/current
 
 script
-  /bin/bash -lc 'bundle exec puma'
+  /bin/bash -lc 'bundle exec puma -b unix://{{ app_path }}/current/tmp/sockets/puma.sock'
   sleep 5
 end script
