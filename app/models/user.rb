@@ -14,8 +14,8 @@ class User < ActiveRecord::Base
   end
 
   def clone_repo
-    repo = Git.clone(github_url, "#{name}_#{repo}", path: "#{Rails.root}/tmp")
-    repo.dir.path
+    repository = Git.clone(github_url, "#{name}_#{repo}", path: "#{Rails.root}/tmp")
+    repository.dir.path
   rescue Git::GitExecuteError
     "#{Rails.root}/tmp/#{name}_#{repo}"
   end
