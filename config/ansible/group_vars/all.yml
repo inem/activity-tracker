@@ -5,5 +5,5 @@ group_name: '{{ app_name }}'
 app_path: /home/{{ user_name }}/apps/{{ app_name }}
 git_url: git@github.com:inem/activity-tracker.git
 branch: master
-app_port: 3000
+app_port: 8081
 ruby_version: 2.2.3
