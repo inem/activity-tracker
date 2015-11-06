@@ -1,4 +1,5 @@
 class WidgetsController < ApplicationController
+  after_action :allow_iframes
 
   def activity_chart
     name, repo = params[:repository].split('/')
@@ -15,5 +16,11 @@ class WidgetsController < ApplicationController
     end
     @statistics = @statistics.to_json
   end
+
+  private
+
+    def allow_iframes
+      response.headers.except! 'X-Frame-Options'
+    end
 
 end
