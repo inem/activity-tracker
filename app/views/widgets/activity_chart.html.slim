@@ -1,0 +1,20 @@
+h4 Commits frequency
+canvas#canvas
+
+script == "window.DATA=#{@statistics}"
+
+coffee:
+  $(document).on 'ready page:load', ->
+    dates = Object.keys(window.DATA)
+    barChartData =
+      labels: dates
+      datasets: [{
+        fillColor: 'rgba(220,220,220,0.5)'
+        strokeColor: 'rgba(220,220,220,0.8)'
+        highlightFill: 'rgba(220,220,220,0.75)'
+        highlightStroke: 'rgba(220,220,220,1)'
+        data: dates.map (d)-> window.DATA[d].length - 1
+      }]
+
+    ctx = document.querySelector('#canvas').getContext('2d')
+    new Chart(ctx).Bar(barChartData, responsive: true)

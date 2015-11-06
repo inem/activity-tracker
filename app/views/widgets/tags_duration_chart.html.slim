@@ -1,0 +1,18 @@
+h4 Hours per tag
+canvas#canvas
+script == "window.DATA=#{@statistics}"
+
+coffee:
+  $(document).on 'ready page:load', ->
+    barChartData =
+      labels: window.DATA.map (d)-> d.name
+      datasets: [{
+        fillColor: 'rgba(220,220,220,0.5)'
+        strokeColor: 'rgba(220,220,220,0.8)'
+        highlightFill: 'rgba(220,220,220,0.75)'
+        highlightStroke: 'rgba(220,220,220,1)'
+        data: window.DATA.map (d)-> Math.round(d.duration/360)/10
+      }]
+
+    ctx = document.querySelector('#canvas').getContext('2d')
+    new Chart(ctx).Bar(barChartData, responsive: true)
