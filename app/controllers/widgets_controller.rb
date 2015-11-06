@@ -15,4 +15,5 @@ class WidgetsController < ApplicationController
     end
     @statistics = @statistics.to_json
   end
+
 end
