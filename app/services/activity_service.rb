@@ -32,4 +32,16 @@ class ActivityService
     end
     users_hash
   end
+
+  def average_commits_count
+    count = commits_hash_per_days.map { |k,v| v.size.to_i - 1 }
+                                      .reduce(:+).to_f/commits_hash_per_days.size
+    count.round(2)
+  end
+
+  def median_commits_count
+    arr = commits_hash_per_days.map { |k,v| v.size.to_i - 1 }.sort
+    arr[arr.size/2]
+  end
+
 end
