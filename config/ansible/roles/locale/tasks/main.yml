@@ -1,0 +1,8 @@
+---
+
+- name: set locale.gen file
+  locale_gen: name={{locale_lang}} state=present
+
+- name: set locale
+  template: src=default.j2 dest=/etc/default/locale
+  become: yes

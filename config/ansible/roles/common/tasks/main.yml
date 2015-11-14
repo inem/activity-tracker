@@ -9,5 +9,5 @@
     - git
     - htop
     - httpie
-    - wget
     - tmux
+    - wget
