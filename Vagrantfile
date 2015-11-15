@@ -15,7 +15,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.network "private_network", type: "dhcp"
 
-  config.vm.synced_folder ".", "/home/vagrant/app"
+  config.vm.synced_folder ".", "/home/vagrant/app", type: "nfs"
 
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "1024"
