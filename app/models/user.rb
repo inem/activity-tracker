@@ -4,6 +4,14 @@ class User < ActiveRecord::Base
   validates :name, :repo, presence: true
   has_many :exercises
 
+  def commits(sha1, sha2)
+    ActivityService.new(self.clone_repo).commits_between_two_tags(sha1,sha2)
+  end
+
+  def chart_statistics
+    ActivityService.new(self.clone_repo).commits_hash_per_days
+  end
+
   def tasks
     github = Github.new user: name, repo: repo
     github.repos.tags

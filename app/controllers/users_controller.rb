@@ -22,16 +22,13 @@ class UsersController < ApplicationController
 
   def commits_frequency
     @user = User.find(params[:id])
-    repo = @user.clone_repo
-    @commits = ActivityService.new(repo).commits_between_two_tags(
-      params[:sha1], params[:sha2])
+    @commits = @user.commits(params[:sha1], params[:sha2])
     render partial: "commits"
   end
 
   def chart_statistics
     @user = User.find(params[:id])
-    repo = @user.clone_repo
-    @statistics = ActivityService.new(repo).commits_hash_per_days
+    @statistics = @user.chart_statistics
     render json: @statistics.to_json
   end
 
