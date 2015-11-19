@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       get :commits_frequency
       get :chart_statistics
     end
+    post :update_repositories, on: :collection
   end
 
   get 'widgets/activity_chart'
