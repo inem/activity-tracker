@@ -1,11 +1,11 @@
 module Statistics
 
   def commits(sha1, sha2)
-    ActivityService.new(self.clone_repo).commits_between_two_tags(sha1,sha2)
+    ActivityService.new(self.repo_path).commits_between_two_tags(sha1,sha2)
   end
 
   def chart_statistics
-    ActivityService.new(self.clone_repo).commits_hash_per_days
+    ActivityService.new(self.repo_path).commits_hash_per_days
   end
 
   def tasks
@@ -14,7 +14,7 @@ module Statistics
   end
 
   def repo_events
-    Repository.new(clone_repo).events
+    Repository.new(repo_path).events
   end
 
   def method_statistics
