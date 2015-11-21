@@ -14,6 +14,7 @@
           <a class="navbar-brand" href="#">ActivityTracker</a>
         </div>
         <%= link_to "Add user", new_user_path, class: "btn btn-default add-user"%>
+        <%= link_to "Update repositories", update_repositories_users_path, class: "btn btn-default update-repos-btn", method: :post %>
       </div>
     </nav>
     <%= yield %>

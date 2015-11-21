@@ -1,21 +1,9 @@
 class User < ActiveRecord::Base
-  after_save :init_exercises
+  include Statistics
+  after_create :clone_repo
 
   validates :name, :repo, presence: true
-  has_many :exercises
-
-  def commits(sha1, sha2)
-    ActivityService.new(self.clone_repo).commits_between_two_tags(sha1,sha2)
-  end
-
-  def chart_statistics
-    ActivityService.new(self.clone_repo).commits_hash_per_days
-  end
-
-  def tasks
-    github = Github.new user: name, repo: repo
-    github.repos.tags
-  end
+  has_many :exercises, dependent: :destroy
 
   def github_url
     "https://github.com/#{name}/#{repo}.git"
@@ -25,27 +13,30 @@ class User < ActiveRecord::Base
     repository = Git.clone(github_url, "#{name}_#{repo}", path: "#{Rails.root}/tmp")
     repository.dir.path
   rescue Git::GitExecuteError
+    repo_path
+  end
+
+  def pull_repo
+    repository = Git.open(repo_path)
+    repository.pull
+    repository.dir.path
+  end
+
+  def repo_path
     "#{Rails.root}/tmp/#{name}_#{repo}"
   end
 
-  def repo_events
-    Repository.new(clone_repo).events
-  end
-
-  def method_statistics
-    repo_events.reverse.uniq(&:method_name)
-  end
-
-  private
-
-  def init_exercises
-    repo = Git.open(clone_repo)
+  def update_exercises
+    exercises.destroy_all
+    repo = Git.open(pull_repo)
     repo.tags.each_with_index.map do |tag, i|
       exercises.create(name: tag.name,
                        start_date: get_dates(repo, i)[:start_date],
                        end_date: get_dates(repo, i)[:end_date])
     end
   end
+
+  private
 
   def get_dates(repo, i)
     hash = {}

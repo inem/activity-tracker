@@ -32,6 +32,11 @@ class UsersController < ApplicationController
     render json: @statistics.to_json
   end
 
+  def update_repositories
+    User.all.each(&:update_exercises)
+    redirect_to root_path
+  end
+
   private
 
   def user_params
