@@ -33,7 +33,7 @@ class UsersController < ApplicationController
   end
 
   def update_repositories
-    User.all.each(&:save)
+    User.all.each(&:update_exercises)
     redirect_to root_path
   end
 

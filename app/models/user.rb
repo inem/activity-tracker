@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
   include Statistics
   after_create :clone_repo
-  after_save :update_exercises
 
   validates :name, :repo, presence: true
   has_many :exercises, dependent: :destroy
@@ -27,8 +26,6 @@ class User < ActiveRecord::Base
     "#{Rails.root}/tmp/#{name}_#{repo}"
   end
 
-  private
-
   def update_exercises
     exercises.destroy_all
     repo = Git.open(pull_repo)
@@ -38,6 +35,8 @@ class User < ActiveRecord::Base
                        end_date: get_dates(repo, i)[:end_date])
     end
   end
+
+  private
 
   def get_dates(repo, i)
     hash = {}
